@@ -12,6 +12,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/easyui-lang-zh_CN.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/datagrid-detailview.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.edatagrid.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/audio.min.js"></script>
     <script type="text/javascript">
         <!--菜单处理-->
         // 封装添加选项卡操作
@@ -27,6 +28,13 @@
             }
         }*/
         $(function () {
+            audiojs.events.ready(function () {
+                var as = audiojs.createAll();
+            });
+
+
+
+
             $.ajax({
                 url: "${pageContext.request.contextPath}/menu/showAll",
                 dataType: "JSON",
@@ -62,7 +70,7 @@
                     title: title,
                     selected: true,
                     closable: true,
-                    href: "${pageContext.request.contextPath}/banner.jsp"
+                    href: "${pageContext.request.contextPath}" + href,
                 });
             }
 

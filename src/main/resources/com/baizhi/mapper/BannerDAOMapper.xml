@@ -12,7 +12,7 @@
         delete from banner where id=#{id}
     </delete>
     <update id="update" parameterType="Banner">
-        update banner set title=#{title},imgPath=#{imgPath},description=#{description},status=#{status},createDate=#{createDate}
+        update banner set status=#{status}
         where id=#{id}
     </update>
 

@@ -19,6 +19,7 @@
 
     $(function () {
 
+
         var toolbar = [{
             iconCls: 'icon-basket_add',
             text: "添加",
@@ -97,9 +98,13 @@
             text: "保存",
             iconCls: 'icon-script_save',
             handler: function () {
+                $.messager.alert("消息", "保存成功", "info")
                 //保存编辑行并发送到服务器
-                $("#dg").edatagrid("saveRow")
+                $("#dg").edatagrid("saveRow");
+                //刷新页面
+                $("#dg").edatagrid("load");
             }
+
         }]
 
 
@@ -152,7 +157,7 @@
 <table id="dg"></table>
 
 <div id="dd" style="display: none">
-    <form id="fom">
+    <form id="fom" enctype="multipart/form-data" method="post">
         <div class="a1">
             id:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input id="id" name="id"
                                                                                                class="easyui-textbox"
@@ -165,7 +170,7 @@
                                                                                                   data-options="required:true,width:200,height:30"/>
         </div>
         <div class="a1">
-            imgPath:&nbsp;&nbsp;&nbsp;&nbsp; <input id="imgPath" name="imgPath" class="easyui-textbox"
+            imgPath:&nbsp;&nbsp;&nbsp;&nbsp; <input id="imgPath" name="imgPath" class="easyui-filebox"
                                                     data-options="width:200,height:30"/>
         </div>
         <div class="a1">
@@ -173,12 +178,15 @@
                                 data-options="required:true,width:200,height:30"/>
         </div>
         <div class="a1">
-            status: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input id="status" name="status" class="easyui-textbox"
-                                                                      data-options="required:true,width:200,height:30"/>
+            status: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <select id="status" name="status" class="easyui-combobox"
+                                                                       data-options="required:true,width:200,height:30">
+            <option value="y">展示</option>
+            <option value="n">不展示</option>
+        </select>
         </div>
-        <%-- <div class="a1">
+        <div class="a1">
              createDate:  <input id="createDate" name="createDate" class="easyui-datetimebox" data-options="width:200,height:30"/>
-         </div>--%>
+        </div>
 
     </form>
 </div>

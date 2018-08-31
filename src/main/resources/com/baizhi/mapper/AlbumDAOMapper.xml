@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.AlbumDAO">
+
+    <resultMap id="all" type="com.baizhi.entity.Album">
+        <id property="id" column="id"/>
+        <result property="title" column="atitle"/>
+        <result property="count" column="count"/>
+        <result property="corverImg" column="corverImg"/>
+        <result property="score" column="score"/>
+        <result property="author" column="author"/>
+        <result property="broadCast" column="broadCast"/>
+        <result property="brief" column="brief"/>
+        <result property="publishDate" column="publishDate"/>
+        <result property="createDate" column="createDate"/>
+        <result property="status" column="status"/>
+        <collection property="children" ofType="com.baizhi.entity.Chapter">
+            <id property="uuid" column="uuid"/>
+            <result property="title" column="ctitle"/>
+            <result property="duration" column="duration"/>
+            <result property="size" column="size"/>
+            <result property="audioPath" column="audioPath"/>
+        </collection>
+    </resultMap>
+    <select id="query" resultMap="all">
+       SELECT
+	a.id ,
+	a.title atitle,
+	a.count,
+	a.corverImg,
+	a.score,
+	a.author,
+	a.broadCast,
+	a.brief,
+	a.publishDate,
+	a.createDate,
+	a. STATUS,
+	c.uuid,
+	c.title ctitle,
+	c.duration,
+	c.size,
+	c.audioPath
+FROM
+	album a
+LEFT JOIN chapter c ON a.id =c.album_id
+    </select>
+    <insert id="add" parameterType="Album">
+        insert into album values(#{id},#{title},#{count},#{corverImg},#{score},#{author},#{broadCast},#{brief},#{publishDate},#{createDate},#{status})
+    </insert>
+    <delete id="delete" parameterType="int">
+        delete from album where id=#{id}
+    </delete>
+    <select id="queryOne" parameterType="int" resultType="Album">
+        select * from album where id=#{id}
+    </select>
+
+</mapper>
+
+
+
+

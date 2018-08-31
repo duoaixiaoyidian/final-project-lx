@@ -23,7 +23,9 @@ public class BannerServiceImpl implements BannerService {
 
     @Override
     public void addBanner(Banner banner) {
+
         bannerDAO.add(banner);
+
     }
 
     @Override
