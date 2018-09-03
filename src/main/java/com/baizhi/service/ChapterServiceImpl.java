@@ -21,7 +21,7 @@ public class ChapterServiceImpl implements ChapterService {
     }
 
     @Override
-    public void deleteChapter(int id) {
+    public void deleteChapter(String id) {
         chapterDAO.delete(id);
     }
 

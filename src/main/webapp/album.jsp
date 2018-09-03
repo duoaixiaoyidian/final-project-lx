@@ -16,12 +16,14 @@
                 handler: function () {
                     var row = $("#tt1").datagrid("getSelected");
                     if (row != null) {
+                        $("#fom0").form("load", row);
+                        $("#corverImg").prop("src", "${pageContext.request.contextPath}/img/1.gif")
                         $("#dd1").dialog({
-                            width: 500,
-                            height: 600,
+                            width: 300,
+                            height: 400,
                             title: '详情',
                             iconCls: 'icon-award_star_add',
-                            href: "${pageContext.request.contextPath}/album/showOne?id=" + row.id,
+                            // href: "${pageContext.request.contextPath}/album/showOne?id=" + row.id,
 
                         })
                     } else {
@@ -51,9 +53,25 @@
                             {
                                 text: "提交",
                                 iconCls: "icon-tick",
+                                handler: function () {
+                                    $("#fom1").submit();
+                                }
                             },
 
                         ]
+                    });
+                    //初始化表单
+                    $("#fom1").form({
+                        url: '${pageContext.request.contextPath}/album/add',
+                        onSubmit: function () {
+                            return true;
+                        },
+                        success: function () {
+                            //关闭dialog
+                            $("#dd2").dialog("close");
+                            //刷新datagrid
+                            $("#tt1").datagrid("load");
+                        }
                     })
                 }
 
@@ -78,9 +96,26 @@
                             {
                                 text: "提交",
                                 iconCls: "icon-tick",
+                                handler: function () {
+                                    $("#fom2").submit();
+
+                                }
                             },
 
                         ]
+                    });
+                    //初始化表单
+                    $("#fom2").form({
+                        url: '${pageContext.request.contextPath}/chapter/add',
+                        onSubmit: function () {
+                            return true;
+                        },
+                        success: function () {
+                            //关闭dialog
+                            $("#dd3").dialog("close");
+                            //刷新datagrid
+                            $("#tt1").datagrid("load");
+                        }
                     })
                 }
 
@@ -88,12 +123,29 @@
             {
                 text: "下载音频",
                 iconCls: "icon-disk_download",
+                handler: function () {
+                    var row = $("#tt1").treegrid("getSelected");
+                    if (row != null) {
+                        if (row.author == null) {
+                            location.href = "${pageContext.request.contextPath}/chapter/down?audioPath=" + row.audioPath + "&name=" + row.title
+                        } else {
+                            alert("请选中专辑");
+                        }
+                    } else {
+                        alert("请选中行");
+                    }
+
+                }
 
             },
         ]
 
 
         $("#tt1").treegrid({
+            onDblClickRow: function (row) {
+                $("#audio_dd").dialog("open")
+                $("#audio").prop("src", "${pageContext.request.contextPath}/audio/" + row.audioPath)
+            },
             url: "${pageContext.request.contextPath}/album/showAll",
             method: "post",
             idField: "id",
@@ -102,7 +154,7 @@
                 {field: 'title', title: '名称', width: 60},
                 {field: 'duration', title: '时长', width: 60},
                 {field: 'size', title: '大小', width: 80},
-                {field: 'audioPath', title: '音频路径', width: 80},
+                {field: 'audioPath', title: '音频路径', width: 80,},
                 {field: 'album_id', title: '专辑ID', width: 80},
             ]],
             fit: true,
@@ -115,9 +167,17 @@
 
 
 <table id="tt1"></table>
-<div id="dd1"></div>
+<div id="dd1">
+    <form id="fom0">
+        title:<input type="text" id="title" name="title"/><br/>
+        count:<input type="text" id="count" name="count"/><br/>
+        author:<input type="text" id="author" name="author"/><br/>
+        brief:<textarea rows="7" cols="1" name="brief" style="width:220px;"/><br/>
+        corverImg:<img src="" id="corverImg"><br/>
+    </form>
+</div>
 <div id="dd2">
-    <form>
+    <form id="fom1">
         <div class="a1">
             id:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
                 name="id" class="easyui-textbox" data-options="required:true,width:200,height:30"/>
@@ -157,34 +217,30 @@
                                                                                                   data-options="required:true,width:200,height:30"/>
         </div>
     </form>
+    <div id="audio_dd" class="easyui-dialog" title="My Dialog"
+         style="width:400px;height:200px;text-align: center;background: #ffb042"
+         data-options="iconCls:'icon-next_green',resizable:true,modal:true,closed:true">
+        <audio src="" id="audio" controls="controls" autoplay="autoplay">
+
+        </audio>
+    </div>
 </div>
 
 <div id="dd3">
-    <form>
-        <div class="a1">
-            uuid:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="uuid" class="easyui-textbox"
-                                                                              data-options="required:true,width:200,height:30"/>
-            <br/></div>
+    <form id="fom2" enctype="multipart/form-data" method="post">
+
         <div class="a1">title:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="title"
                                                                                                        class="easyui-textbox"
                                                                                                        data-options="required:true,width:200,height:30"/>
             <br/></div>
-        <div class="a1"> duration:&nbsp;&nbsp;&nbsp;<input name="duration" class="easyui-textbox"
-                                                           data-options="required:true,width:200,height:30"/>
-            <br/></div>
-        <div class="a1">size:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="size"
-                                                                                                class="easyui-textbox"
-                                                                                                data-options="required:true,width:200,height:30"/>
-            <br/></div>
-        <div class="a1">audioPath:<input name="audioPath" class="easyui-textbox"
-                                         data-options="required:true,width:200,height:30"/>
+
+        <div class="a1">Path:<input name="path" class="easyui-filebox"
+                                    data-options="required:true,width:200,height:30,"/>
             <br/></div>
         <div class="a1">album_id:&nbsp;<input name="album_id" class="easyui-textbox"
                                               data-options="required:true,width:200,height:30"/>
             <br/></div>
-        <div class="a1">status:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="status" class="easyui-textbox"
-                                                                          data-options="required:true,width:200,height:30"/>
-        </div>
     </form>
+
 </div>
 </html>

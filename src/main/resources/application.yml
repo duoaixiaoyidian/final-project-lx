@@ -21,6 +21,9 @@ spring:
     encoding:
       charset: UTF-8
       force: true
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8

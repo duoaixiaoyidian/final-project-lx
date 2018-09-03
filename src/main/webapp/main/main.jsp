@@ -7,6 +7,7 @@
     <title>持名法州主页</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/themes/default/easyui.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/themes/IconExtension.css">
+    <link href="${pageContext.request.contextPath}/favicon.ico" rel="shortcut icon">
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/easyui-lang-zh_CN.js"></script>
@@ -28,16 +29,14 @@
             }
         }*/
         $(function () {
-            audiojs.events.ready(function () {
-                var as = audiojs.createAll();
-            });
-
+            /* audiojs.events.ready(function () {
+                 var as = audiojs.createAll();
+             });*/
 
 
 
             $.ajax({
                 url: "${pageContext.request.contextPath}/menu/showAll",
-                dataType: "JSON",
                 success: function (data) {
                     $.each(data, function (index, first) {
                         var c = "";
@@ -92,7 +91,8 @@
     </div>
 </div>
 <div data-options="region:'south',split:true" style="height: 40px;background: #5C160C">
-    <div style="text-align: center;font-size:15px; color: #FAF7F7;font-family: 楷体">&copy;百知教育 htf@zparkhr.com.cn</div>
+    <div style="text-align: center;font-size:15px; color: #FAF7F7;font-family: 楷体">&copy;假笑网络服务 17326881192@163.com
+    </div>
 </div>
 
 <div data-options="region:'west',title:'导航菜单',split:true" style="width:220px;">
@@ -104,7 +104,7 @@
 <div id="tab1" data-options="region:'center'">
     <div id="tt" class="easyui-tabs" data-options="fit:true,narrow:true,pill:true">
         <div title="主页" data-options="iconCls:'icon-neighbourhood',closable:true,"
-             style="background-image:url(image/shouye.jpg);background-repeat: no-repeat;background-size:100% 100%;"></div>
+             style="background-image:url(${pageContext.request.contextPath}/main/image/shouye.png);background-repeat: no-repeat;background-size:100% 100%;"></div>
     </div>
 </div>
 </body>

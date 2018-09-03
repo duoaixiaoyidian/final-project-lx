@@ -42,6 +42,7 @@
                 //初始化表单
                 $("#fom").form({
                     url: '${path}/banner/add',
+                    method: 'post',
                     onSubmit: function () {
                         return true;
                     },
@@ -114,9 +115,9 @@
             fit: true,
             fitColumns: true,
             pagination: true,
-            pageList: [3, 6, 9, 12],
-            pageNumber: 1,
-            pageSize: 3,
+            pageList: [2, 4, 9, 12],
+            pageSize: 2,
+            rownumbers: true,
             view: detailview,
             detailFormatter: function (rowIndex, rowData) {
                 return '<table><tr>' +
@@ -145,9 +146,17 @@
                 {field: 'createDate', title: '上传日期', width: 100},
             ]],
             toolbar: toolbar,
+            collapsible: true,
+            ctrlSelect: true,
 
         });
+        var pager = $('#dg').datagrid('getPager');
+        pager.pagination('refresh', {
+            total: '${total}',
+            pageNumber: 2,
+            displayMsg: '当前显示第 {from}-{to} 条记录 ， 共 {total} 条记录'
 
+        });
 
     })
 
@@ -158,11 +167,7 @@
 
 <div id="dd" style="display: none">
     <form id="fom" enctype="multipart/form-data" method="post">
-        <div class="a1">
-            id:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input id="id" name="id"
-                                                                                               class="easyui-textbox"
-                                                                                               data-options="required:true,width:200,height:30"/>
-        </div>
+
         <div class="a1">
             title:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input id="title"
                                                                                                   name="title"
@@ -170,8 +175,8 @@
                                                                                                   data-options="required:true,width:200,height:30"/>
         </div>
         <div class="a1">
-            imgPath:&nbsp;&nbsp;&nbsp;&nbsp; <input id="imgPath" name="imgPath" class="easyui-filebox"
-                                                    data-options="width:200,height:30"/>
+            img:&nbsp;&nbsp;&nbsp;&nbsp; <input id="img" name="imgs" class="easyui-filebox"
+                                                data-options="width:200,height:30"/>
         </div>
         <div class="a1">
             description: <input id="description" name="description" class="easyui-textbox"
@@ -189,5 +194,7 @@
         </div>
 
     </form>
+
+
 </div>
 </html>

@@ -3,7 +3,7 @@
 <mapper namespace="com.baizhi.dao.AlbumDAO">
 
     <resultMap id="all" type="com.baizhi.entity.Album">
-        <id property="id" column="id"/>
+        <id property="id" column="aid"/>
         <result property="title" column="atitle"/>
         <result property="count" column="count"/>
         <result property="corverImg" column="corverImg"/>
@@ -15,16 +15,17 @@
         <result property="createDate" column="createDate"/>
         <result property="status" column="status"/>
         <collection property="children" ofType="com.baizhi.entity.Chapter">
-            <id property="uuid" column="uuid"/>
+            <id property="id" column="cid"/>
             <result property="title" column="ctitle"/>
             <result property="duration" column="duration"/>
             <result property="size" column="size"/>
             <result property="audioPath" column="audioPath"/>
+            <result property="album_id" column="album_id"/>
         </collection>
     </resultMap>
     <select id="query" resultMap="all">
        SELECT
-	a.id ,
+        a.id aid,
 	a.title atitle,
 	a.count,
 	a.corverImg,
@@ -35,11 +36,12 @@
 	a.publishDate,
 	a.createDate,
 	a. STATUS,
-	c.uuid,
+        c.id cid,
 	c.title ctitle,
 	c.duration,
 	c.size,
-	c.audioPath
+        c.audioPath,
+        c.album_id
 FROM
 	album a
 LEFT JOIN chapter c ON a.id =c.album_id

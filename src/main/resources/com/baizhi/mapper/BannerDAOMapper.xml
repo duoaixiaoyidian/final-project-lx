@@ -3,7 +3,10 @@
 <mapper namespace="com.baizhi.dao.BannerDAO">
 
     <select id="queryAll" resultType="Banner">
-       select * from banner
+        select * from banner limit #{start},#{row}
+    </select>
+    <select id="query" resultType="int">
+        select count(*) from banner
     </select>
     <insert id="add" parameterType="Banner">
         insert into banner values(#{id},#{title},#{imgPath},#{description},#{status},#{createDate})

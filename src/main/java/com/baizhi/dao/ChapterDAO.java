@@ -7,7 +7,7 @@ import java.util.List;
 public interface ChapterDAO {
     public void add(Chapter chapter);
 
-    public void delete(int uuid);
+    public void delete(String id);
 
     public List<Chapter> queryAll();
 }

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Chapter implements Serializable {
-    private String uuid;
+    private String id;
     private String title;
     private String duration;
     private String size;
@@ -14,8 +14,8 @@ public class Chapter implements Serializable {
     public Chapter() {
     }
 
-    public Chapter(String uuid, String title, String duration, String size, String audioPath, int album_id) {
-        this.uuid = uuid;
+    public Chapter(String id, String title, String duration, String size, String audioPath, int album_id) {
+        this.id = id;
         this.title = title;
         this.duration = duration;
         this.size = size;
@@ -23,12 +23,12 @@ public class Chapter implements Serializable {
         this.album_id = album_id;
     }
 
-    public String getUuid() {
-        return uuid;
+    public String getId() {
+        return id;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -74,7 +74,7 @@ public class Chapter implements Serializable {
     @Override
     public String toString() {
         return "Chapter{" +
-                "uuid='" + uuid + '\'' +
+                "id='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", duration='" + duration + '\'' +
                 ", size='" + size + '\'' +
@@ -89,7 +89,7 @@ public class Chapter implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Chapter chapter = (Chapter) o;
         return album_id == chapter.album_id &&
-                Objects.equals(uuid, chapter.uuid) &&
+                Objects.equals(id, chapter.id) &&
                 Objects.equals(title, chapter.title) &&
                 Objects.equals(duration, chapter.duration) &&
                 Objects.equals(size, chapter.size) &&
@@ -99,6 +99,6 @@ public class Chapter implements Serializable {
     @Override
     public int hashCode() {
 
-        return Objects.hash(uuid, title, duration, size, audioPath, album_id);
+        return Objects.hash(id, title, duration, size, audioPath, album_id);
     }
 }

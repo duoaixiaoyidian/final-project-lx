@@ -15,11 +15,15 @@ public class BannerServiceImpl implements BannerService {
     @Autowired
     private BannerDAO bannerDAO;
 
+
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<Banner> queryAll() {
-        return bannerDAO.queryAll();
+
+    public List<Banner> queryAll(int start, int row) {
+        start = (start - 1) * row;
+        return bannerDAO.queryAll(start, row);
     }
+
 
     @Override
     public void addBanner(Banner banner) {
@@ -36,5 +40,10 @@ public class BannerServiceImpl implements BannerService {
     @Override
     public void updateBanner(Banner banner) {
         bannerDAO.update(banner);
+    }
+
+    @Override
+    public int query() {
+        return bannerDAO.query();
     }
 }

@@ -5,13 +5,11 @@
     <select id="queryAll" resultType="Chapter">
        select * from chapter
     </select>
-    <insert id="add" parameterType="Banner">
-        <selectKey keyProperty="id" resultType="int" order="BEFORE">
-            select replace(uuid(),"-","")
-        </selectKey>
-        insert into chapter values(#{title},#{duration},#{size},#{audioPath},#{album_id})
+    <insert id="add" parameterType="Chapter">
+
+        insert into chapter values(#{id},#{title},#{duration},#{size},#{audioPath},#{album_id})
     </insert>
-    <delete id="delete" parameterType="int">
+    <delete id="delete" parameterType="java.lang.String">
         delete from chapter where id=#{id}
     </delete>
 

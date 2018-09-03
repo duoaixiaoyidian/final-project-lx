@@ -21,17 +21,21 @@
             });
 
             //  form 表单提交
-            $("#loginForm").bind("submit", function () {
-
-                return true;
-            });
+            $("#loginForm").form("submit", {
+                onSubmit: function () {
+                    return true;
+                },
+                success: function (data) {
+                    location.href = '${pageContext.request.contextPath}/admin/login';
+                }
+            })
         });
     </script>
 </head>
 <body>
 
 <div class="login">
-    <form id="loginForm" action="${pageContext.request.contextPath}/main/main.jsp" method="post">
+    <form id="loginForm">
 
         <table>
             <tbody>
@@ -43,7 +47,7 @@
                     用户名:
                 </th>
                 <td>
-                    <input type="text" name="user.name" class="text" value="xxx" maxlength="20"/>
+                    <input type="text" name="name" class="text" value="xxx" maxlength="20"/>
                 </td>
             </tr>
             <tr>
@@ -51,7 +55,7 @@
                     密&nbsp;&nbsp;&nbsp;码:
                 </th>
                 <td>
-                    <input type="password" name="user.password" class="text" value="xxx" maxlength="20"
+                    <input type="password" name="password" class="text" value="xxx" maxlength="20"
                            autocomplete="off"/>
                 </td>
             </tr>

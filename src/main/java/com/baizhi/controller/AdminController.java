@@ -22,9 +22,13 @@ public class AdminController {
     }
 
     @RequestMapping("/login")
-    public String login(String username, String password) {
-        Admin ad = adminService.queryAdmin(username, password);
-        return "/main/main";
+    public String login(String name, String password, Admin admin) {
+        if (admin.getName().equals(name) & admin.getPassword().equals(password)) {
+            Admin ad = adminService.queryAdmin(name, password);
+            return "/main/main";
+        } else {
+            return "/login";
+        }
     }
 
     @RequestMapping("/delete")
