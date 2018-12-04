@@ -8,7 +8,7 @@ import java.util.Objects;
  * Created by M on 2018/8/28.
  */
 public class User implements Serializable {
-    private int id;
+    private Integer id;
     private String photoImg;
     private String name;
     private String dharmaName;
@@ -26,7 +26,7 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(int id, String photoImg, String name, String dharmaName, String sex, String province, String city, String sign, String phoneNum, String password, String salt, String status, Date registDate, int guru_id) {
+    public User(Integer id, String photoImg, String name, String dharmaName, String sex, String province, String city, String sign, String phoneNum, String password, String salt, String status, Date registDate, int guru_id) {
         this.id = id;
         this.photoImg = photoImg;
         this.name = name;
@@ -43,11 +43,11 @@ public class User implements Serializable {
         this.guru_id = guru_id;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -180,8 +180,8 @@ public class User implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id &&
-                guru_id == user.guru_id &&
+        return guru_id == user.guru_id &&
+                Objects.equals(id, user.id) &&
                 Objects.equals(photoImg, user.photoImg) &&
                 Objects.equals(name, user.name) &&
                 Objects.equals(dharmaName, user.dharmaName) &&

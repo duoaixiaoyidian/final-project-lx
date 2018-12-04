@@ -14,6 +14,8 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/datagrid-detailview.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.edatagrid.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/audio.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/echarts.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/china.js"></script>
     <script type="text/javascript">
         <!--菜单处理-->
         // 封装添加选项卡操作

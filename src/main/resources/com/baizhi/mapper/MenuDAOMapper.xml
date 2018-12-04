@@ -24,7 +24,7 @@
         select m.id mid,m.title mtitle,m.content mcontent,m.href mhref,m.iconCls miconCls,m.parentId pid,
 n.id nid,n.title ntitle,n.content ncontent,n.href nhref,n.iconCls niconCls,n.parentId tid
 from Menu m LEFT JOIN Menu n on m.id=n.parentId
-where m.id between 1 and 7
+        where m.id between 1 and 7 or m.id=11
 
     </select>
 

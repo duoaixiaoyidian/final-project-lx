@@ -66,16 +66,45 @@
                 }
 
             }, {
-                text: "自定義",
-                iconCls: "icon-flower_daisy",
-                iconAlign: "right",
+                text: "自定义导出",
+                iconCls: "icon-arrow_ne",
                 handler: function () {
                     $("#customer_dd").dialog("open")
 
                 },
-
-
             },
+            {
+                text: "导入",
+                iconCls: "icon-arrow_se",
+                handler: function () {
+                    $("#import_dd").dialog({
+                        width: 400,
+                        height: 500,
+                        title: "导入",
+                        buttons: [{
+                            text: "提交",
+                            iconCls: "icon-bullet_tick",
+                            handler: function () {
+                                $("#import_ff").submit();
+                            }
+                        }]
+                    })
+                    //初始化表单
+                    $("#fom1").form({
+                        url: '${pageContext.request.contextPath}/user/import',
+                        onSubmit: function () {
+                            return true;
+                        },
+                        success: function () {
+                            //关闭dialog
+                            $("#import_dd").dialog("close");
+                            //刷新datagrid
+                            $("#import_dd").datagrid("load");
+                        }
+                    })
+
+                },
+            }
         ]
 
         $("#user_datagrid").datagrid({
@@ -143,7 +172,7 @@
       },
        {
         'id':'photoImg',
-        'text': '頭像',
+        'text': '头像',
         'checked': true
       },
       { 'id':'sex',
@@ -164,33 +193,33 @@
         'checked': true
       },
       { 'id':'sign',
-        'text': '簽名',
+        'text': '签名',
         'checked': true
       },
        {
         'id':'phoneNum',
-        'text': '電話',
+        'text': '电话',
         'checked': true
       },
       { 'id':'password',
-        'text': '密碼',
+        'text': '密码',
         'checked': true
       },
       { 'id':'salt',
-        'text': '私鹽',
+        'text': '私盐',
         'checked': true
       },
        {
         'id':'status',
-        'text': '狀態',
+        'text': '状态',
         'checked': true
       },
       { 'id':'registDate',
-        'text': '註冊日期',
+        'text': '注册日期',
         'checked': true
       },
       { 'id':'guru_id',
-        'text': '上師ID',
+        'text': '上师ID',
         'checked': true
       },
     ]
@@ -200,5 +229,12 @@
         <a id="btn" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-flower_daisy'">提交</a>
     </form>
 
+</div>
+<div id="import_dd" style="display: none;">
+    <form id="import_ff" method="post" style="width:200px;">
+        <div>
+            选择文件： <input class="easyui-filebox" name="name" data-options="width:200"/>
+        </div>
+    </form>
 </div>
 </html>

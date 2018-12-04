@@ -1,6 +1,7 @@
 package com.baizhi.controller;
 
 import com.baizhi.entity.User;
+import com.baizhi.entity.UserDto;
 import com.baizhi.service.UserService;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -21,9 +22,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static org.apache.poi.ss.usermodel.Cell.CELL_TYPE_NUMERIC;
 
@@ -40,11 +39,11 @@ public class UserController {
         return users;
     }
 
-    @RequestMapping("/update")
+  /*  @RequestMapping("/update")
     public String update(User user) {
         userService.updateUser(user);
         return "main/main";
-    }
+    }*/
 
     @RequestMapping("/down")
     public void down(String name, String excelPath, HttpServletRequest request, HttpServletResponse response) {
@@ -209,10 +208,12 @@ public class UserController {
                     Method method = userClass.getMethod(methodName, null);
                     Object invoke = method.invoke(user, null);
                     if (invoke instanceof Date) {
-                        sheet.setColumnWidth(j, 21 * 256);
+                        sheet.setColumnWidth(j, 20 * 256);
                         cell.setCellStyle(cellStyle);
                         cell.setCellValue((Date) invoke);
                     } else if (invoke instanceof String) {
+                        sheet.setColumnWidth(j, 50 * 256);
+                        cell.setCellStyle(cellStyle);
                         cell.setCellValue((String) invoke);
                     } else {
                         cell.setCellValue((int) invoke);
@@ -244,4 +245,63 @@ public class UserController {
         }
 
     }
+
+    @RequestMapping("/bar")
+    @ResponseBody
+    public Map<String, Object> testEcharts(Integer[] day) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        //查询数据库
+        List<String> strs = new ArrayList<String>();
+        List<Integer> amount = new ArrayList<>();
+        for (int i = 0; i < day.length; i++) {
+            if (day[i] < 7) {
+                strs.add("7天");
+            } else if (day[i] < 15) {
+                strs.add("15天");
+            } else if (day[i] < 30) {
+                strs.add("30天");
+            } else {
+                strs.add("近半年");
+            }
+            amount.add(userService.queryNum(day[i]));
+
+            map.put("xAxis", strs);
+            map.put("men", amount);
+
+        }
+        return map;
+    }
+
+    @RequestMapping("/maps")
+    @ResponseBody
+    public Map<String, Object> testMap(String[] sex) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        List<Object> men = new ArrayList<Object>();
+        List<Object> women = new ArrayList<Object>();
+        for (int i = 0; i < sex.length; i++) {
+            if ("男".equals(sex[i])) {
+                List<UserDto> userDtos = userService.queryBySex(sex[i]);
+                for (UserDto userDto : userDtos) {
+                    women.add(userDto);
+                }
+            } else {
+                List<UserDto> userDtos = userService.queryBySex(sex[i]);
+                for (UserDto userDto : userDtos) {
+                    men.add(userDto);
+                }
+
+            }
+        }
+
+        map.put("men", men);
+        map.put("women", women);
+
+        return map;
+    }
+
+    @RequestMapping("/update")
+    public void update(User user) {
+        userService.updateUser(user);
+    }
+
 }

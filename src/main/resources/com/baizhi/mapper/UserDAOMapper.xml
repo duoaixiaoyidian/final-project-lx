@@ -4,9 +4,25 @@
     <select id="query" resultType="User">
         select * from user
     </select>
+    <select id="queryCount" resultType="java.lang.Integer">
+        select count(*) from user where datediff(now(),registDate)&lt;#{day}
+    </select>
+    <select id="queryBySex" parameterType="java.lang.String" resultType="UserDto">
+      select province name,count(*) value from user where sex=#{sex} GROUP BY province ;
+    </select>
     <update id="update" parameterType="User">
         update user set status=#{status} where id=#{id}
     </update>
+    <update id="updateById" parameterType="int">
+        update user set status=#{status} where id=#{id}
+    </update>
+    <insert id="add" parameterType="User">
+        insert into user(phoneNum,password) VALUES (#{0},#{1})
+    </insert>
+
+    <select id="queryByBo" parameterType="java.lang.String" resultType="UserBo">
+        select id uid,phoneNum,password from user where phoneNum=#{phoneNum}
+    </select>
 
 </mapper>
 
